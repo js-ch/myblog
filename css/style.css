@@ -1,28 +1,140 @@
-.blogname a {
-  text-decoration: none;
-  color: black;
+html, body {
+   height: 100%;
+}
+body {
+   margin: 0;
+   padding: 0;
+   min-height: 100%;
+}
+
+img#cover {
+  width: 100%;
+}
+
+input#toggle[type=checkbox] {
+   position: fixed;;
+   opacity: 0;
+}
+label#hamburger {
+   position: fixed;;
+   top: 10px;
+   right: 40px;
+   z-index: 1;
+   display: block;
+   font-size:3em;
+   color: #444;
+   cursor: pointer;
+   width:30px;height:30px;
+   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+   transform: translate3d(0, 0, 0);
+   transition: all .4s;
+}
+input#toggle[type=checkbox]:checked ~ label#hamburger {
+   transform: translate3d(-250px, 0, 0) rotate(90deg);
+}
+.page-content {
+   transform: translate3d(0, 0, 0);
+   transition: transform .4s;
+}
+input#toggle[type=checkbox]:checked ~ .page-content {
+   transform: translate3d(-250px, 0, 0);
+}
+.slide-menu {
+   position: fixed;
+   visibility: hidden;
+   background-color: grey;
+   width: 250px;
+   right: -250px;
+   top: 0;
+   height: 100%;
+   transition: transform .4s;
+   transform: translate3d(0, 0, 0);
+}
+input#toggle[type=checkbox]:checked ~ .slide-menu {
+   transform: translate3d(-250px, 0, 0);
+   visibility: visible;
+}
+nav.menu {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+
+
+
+.pure-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition-property: opacity;
+  transition-duration: 350ms;
+  transition-delay: 150ms;
+  transition-timing-function: ease-in-out; }
+
+input#toggle[type=checkbox]:checked ~ .pure-overlay {
+  right: 250px;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  z-index: 2;
+}
+
+
+
+
+
+
+#leaving {
+  height: 0;
+  margin: 25px;
 }
 
 h3 {
+  font-weight: normal;
+  font-size: 2rem;
   margin: 0;
+}
+
+h3 > a {
+  text-decoration: none;
+  color: MidnightBlue;
+}
+
+.post-excerpt {
+  color: LightSlateGrey;
+    padding-left: 1.75em;
+}
+
+.post-more {
+    font-style: italic;
+    position:absolute;
+    bottom:0;
+    right: 0;
 }
 
 .post_list {
   position: relative;
-  height: 8.725rem;
+  height: 12rem;
 }
 
-.timeline_left {
+.timestamp_left {
   float: left;
   width: 20%;
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .metas {
-  height: 100%;
+  height: 80%;
+  width: 60%;
+  position: relative;
   margin-left: 20%;
-  padding-left: 3.75em;
+  padding-left: 6.75em;
   padding-top: 0.75em;
   word-break: break-all;
 }
@@ -70,6 +182,9 @@ h3 {
 
 .issue_date {
   text-align: right;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1em;
+  color: SteelBlue;
   line-height: 5.75rem;
   padding-right: 3.75em;
 }

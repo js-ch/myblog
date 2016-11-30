@@ -4,7 +4,7 @@ figure, pre, pre table, pre tbody, pre tr, pre td {
   border: 0;
   background: inherit;
   font-size: inherit;
-  font-family:inherit;
+  font-family: inherit;
   line-height: inherit;
 }
 
@@ -24,7 +24,7 @@ code {
 
 pre > code {
 	display: block;
-	overflow-x: auto;
+	overflow-x: hidden;
 	white-space: pre;
 	word-wrap: normal;
 	margin: 0.75em 3.25em;
