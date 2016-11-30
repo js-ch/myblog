@@ -1,0 +1,60 @@
+---
+layout: "post"
+title: "Github博客页面的最简初始化"
+date: "2016-11-27 15:38"
+---
+
+生成公钥  
+
+```
+ssh-keygen -t rsa -C "silicat@sina.com"
+```
+将公钥复制到Github，测试是否连上  
+
+```
+ssh -T git@github.com
+```
+配置git
+
+```
+git config --global user.name "js-ch"
+git config --global user.email "silicat@sina.com"
+```
+在Github页面新建Repository: myblog  
+
+```
+git init myblog
+cd myblog/
+git remote add origin git@github.com:js-ch/myblog.git
+git checkout -b gh-pages
+```
+生成新站点
+
+```
+jekyll new .
+```
+
+修改`Gemfile`注释掉  
+
+```
+# gem "jekyll", "3.3.1"
+```  
+去掉注释并明确版本号  
+
+```
+gem "github-pages", '105', group: :jekyll_plugins
+```
+
+提交gh-pages分支到Github  
+
+```
+git add .
+git commit -m "updated site"
+git push -u origin gh-pages
+```
+本地测试博客网站
+
+```
+bundle update
+bundle exec jekyll serve -H 0.0.0.0
+```

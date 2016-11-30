@@ -1,0 +1,86 @@
+---
+layout: "post"
+title: "Jekyll本地测试服务平台的搭建"
+date: "2016-11-28 08:24"
+---
+
+新建Docker镜像，支持Ruby、Nodejs、Python、gosu等
+
+先下载nodejs安装脚本
+
+```
+wget https://deb.nodesource.com/setup_7.x
+```
+{% highlight docker linenos %}
+FROM       ubuntu
+MAINTAINER SiliCAT "https://github.com/SiliCAT"
+
+ENV GOSU_VERSION 1.9
+RUN set -x \
+    && apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
+    && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+    && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
+    && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
+    && export GNUPGHOME="$(mktemp -d)" \
+    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+    && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+    && rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
+    && chmod +x /usr/local/bin/gosu \
+    && gosu nobody true \
+    && apt-get purge -y --auto-remove ca-certificates wget
+
+ADD setup_7.x /tmp/ji_build/
+RUN /tmp/ji_build/setup_7.x && rm -rf /tmp/ji_build
+
+RUN apt-get update && apt-get install -y ruby-full python nodejs build-essential git zlib1g-dev && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+{% endhighlight %}
+
+生成镜像
+
+```
+docker build -t ruby-node .
+```
+新建Docker镜像，安装bundler以及github-pages
+{% highlight docker linenos %}
+FROM       ruby-node
+MAINTAINER SiliCAT "https://github.com/SiliCAT"
+
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+RUN adduser --disabled-password --disabled-login -u 65007 -U 65007 --gecos '' jekyll
+
+ADD Gemfile /home/jekyll
+ADD gemenv.sh /home/jekyll
+
+RUN chown jekyll.jekyll /home/jekyll/Gemfile && chown jekyll.jekyll /home/jekyll/gemenv.sh
+
+USER jekyll
+
+WORKDIR /home/jekyll
+
+RUN cat gemenv.sh >> .bashrc && rm gemenv.sh \
+    && export GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir') \
+    && export GEM_PATH=$GEM_HOME \
+    && export PATH=$PATH:$GEM_HOME/bin \
+    && gem install bundler && bundle install
+{% endhighlight %}
+其中，文件`Gemfile`
+
+```
+source 'https://rubygems.org'
+gem 'github-pages', '105', group: :jekyll_plugins
+```
+脚本片段`gemenv.sh`
+
+```
+
+export GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
+export GEM_PATH=$GEM_HOME
+export PATH=$PATH:$GEM_HOME/bin
+```
+生成镜像
+
+```
+docker build -t jekyll .
+```
