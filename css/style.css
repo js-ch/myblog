@@ -85,13 +85,13 @@ input#toggle[type=checkbox]:checked ~ .pure-overlay {
 }
 
 
-
-
-
-
 #leaving {
   height: 0;
   margin: 25px;
+}
+
+.post {
+  margin: 0 1.25em;
 }
 
 h3 {
@@ -103,6 +103,11 @@ h3 {
 h3 > a {
   text-decoration: none;
   color: MidnightBlue;
+}
+
+.post-more > a {
+  text-decoration: none;
+  color: navy;
 }
 
 .post-excerpt {
@@ -187,4 +192,70 @@ h3 > a {
   color: SteelBlue;
   line-height: 5.75rem;
   padding-right: 3.75em;
+}
+
+@media screen and (min-width: 720px) and (max-width: 1000px){
+
+    .issue_date {
+      font-size: 1em;
+      padding-right: 1.25em;
+    }
+
+    .metas {
+      height: 80%;
+      width: 70%;
+      position: relative;
+      margin-left: 20%;
+      padding-left: 2.75em;
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+  .timestamp_left {
+    overflow: hidden;
+    float: none;
+    width: auto;
+    height: auto;
+  }
+
+  .issue_date {
+    text-align: left;
+    font-size: 0.8em;
+    line-height: 1em;
+    padding-left: 1.75em;
+  }
+
+  .post_list {
+    height: auto;
+  }
+
+  .metas {
+    height: auto;
+    width: 80%;
+    position: relative;
+    margin-left: 0;
+    padding-left: 1.75em;
+    word-break: break-all;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  .post_list:before {
+    display: none;
+  }
+
+  .post_list:after {
+    display: none;
+  }
+
+  .post_list:hover:after {
+    display: none;
+  }
+
+  .post-more {
+    display: none;
+  }
 }
