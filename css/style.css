@@ -87,7 +87,7 @@ input#toggle[type=checkbox]:checked ~ .pure-overlay {
 
 #leaving {
   height: 0;
-  margin: 25px;
+  margin: 2.75em;
 }
 
 .post {
@@ -95,6 +95,7 @@ input#toggle[type=checkbox]:checked ~ .pure-overlay {
 }
 
 h3 {
+  font-family: 'Montserrat', sans-serif;
   font-weight: normal;
   font-size: 2rem;
   margin: 0;
@@ -105,21 +106,9 @@ h3 > a {
   color: MidnightBlue;
 }
 
-.post-more > a {
-  text-decoration: none;
-  color: navy;
-}
-
 .post-excerpt {
   color: LightSlateGrey;
     padding-left: 1.75em;
-}
-
-.post-more {
-    font-style: italic;
-    position:absolute;
-    bottom:0;
-    right: 0;
 }
 
 .post_list {
@@ -139,7 +128,7 @@ h3 > a {
   width: 60%;
   position: relative;
   margin-left: 20%;
-  padding-left: 6.75em;
+  padding-left: 10%;
   padding-top: 0.75em;
   word-break: break-all;
 }
@@ -183,6 +172,37 @@ h3 > a {
     -webkit-box-shadow: 0 0 0 3px #d8e9ff;
     box-shadow: 0 0 0 3px #d8e9ff;
     z-index: 2;
+}
+
+.metas:before {
+    content: "";
+    width: 60%;
+    height: 1px;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.post_list:hover > .metas:before {
+  visibility: visible;
+}
+
+.post-more {
+    font-family: 'Catamaran', sans-serif;
+    position:absolute;
+    bottom:0;
+    right: 0;
+    visibility: hidden;
+}
+
+.post_list:hover .post-more {
+    visibility: visible;
+}
+
+.post-more > a {
+  text-decoration: none;
+  color: navy;
 }
 
 .issue_date {
